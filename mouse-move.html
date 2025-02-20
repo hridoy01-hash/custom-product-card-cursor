@@ -54,37 +54,54 @@
             display: none;
             white-space: nowrap;
         }
+        .product__card--container{
+            display: flex;
+            gap: 15px;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="product-card" data-product-category="Ready-to-Wear">
-        Hover Me
+    <div class="product__card--container">
+        <div class="product-card" data-product-category="Ready-to-Wear">
+           Apple
+        </div>
+        <div class="product-card" data-product-category="Kurtis">
+            Banana
+        </div>
+        <div class="product-card" data-product-category="Abayas">
+            Mango
+        </div>
+        <div class="product-card" data-product-category="Dupattas">
+            Orange
+        </div>
     </div>
     <div class="custom-cursor"></div>
 
     <script>
-        const productCard = document.querySelector(".product-card");
+        const productCards = document.querySelectorAll(".product-card");
         const cursor = document.querySelector(".custom-cursor");
 
-        productCard.addEventListener("mouseenter", () => {
-            const category = productCard.getAttribute("data-product-category");
-            cursor.innerText = category;
-            cursor.style.display = "block";
-        });
+        productCards.forEach(card => {
+            card.addEventListener("mouseenter", () => {
+                const category = card.getAttribute("data-product-category");
+                cursor.innerText = category;
+                cursor.style.display = "block";
+            });
 
-        productCard.addEventListener("mouseleave", () => {
-            cursor.style.display = "none";
-        });
+            card.addEventListener("mouseleave", () => {
+                cursor.style.display = "none";
+            });
 
-        productCard.addEventListener("mousemove", (e) => {
-            cursor.style.left = `${e.pageX}px`;
-            cursor.style.top = `${e.pageY}px`;
+            card.addEventListener("mousemove", (e) => {
+                cursor.style.left = `${e.pageX}px`;
+                cursor.style.top = `${e.pageY}px`;
+            });
         });
 
         document.addEventListener("mousemove", (e) => {
-            if (!productCard.contains(e.target)) {
+            if (![...productCards].some(card => card.contains(e.target))) {
                 cursor.style.display = "none";
             }
         });
